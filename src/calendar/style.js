@@ -1,26 +1,66 @@
-import {StyleSheet} from 'react-native';
-import * as defaultStyle from '../style';
+import {StyleSheet, Platform} from 'react-native';
+import * as defaultStyle from '../../../style';
 
-const STYLESHEET_ID = 'stylesheet.calendar.main';
+const STYLESHEET_ID = 'stylesheet.day.basic';
 
-export default function getStyle(theme={}) {
+export default function styleConstructor(theme={}) {
   const appStyle = {...defaultStyle, ...theme};
   return StyleSheet.create({
-    container: {
-      paddingLeft: 5,
-      paddingRight: 5,
-      backgroundColor: appStyle.calendarBackground
+    base: {
+      width: 38,
+      height: 38,
+     alignItems: 'center'
     },
-    monthView: {
-      backgroundColor: appStyle.calendarBackground
+    text: {
+      marginTop: Platform.OS === 'android' ? 8 : 6,
+      fontSize: appStyle.textDayFontSize,
+      fontFamily: appStyle.textDayFontFamily,
+      fontWeight: appStyle.textDayFontWeight,
+      color: appStyle.dayTextColor,
+      backgroundColor: 'rgba(255, 255, 255, 0)',
+      ...appStyle.textDayStyle
     },
-    week: {
-      marginTop: 7,
-      marginBottom: 7,
-      flexDirection: 'row',
-      justifyContent: 'space-around'
+    alignedText: {
+      marginTop: Platform.OS === 'android' ? 8 : 6
+    },
+    selected: {
+      backgroundColor: appStyle.selectedDayBackgroundColor,
+      borderRadius: 8
+    },
+    today: {
+      backgroundColor: appStyle.todayBackgroundColor,
+      borderRadius: 8
+    },
+    todayText: {
+      color: appStyle.todayTextColor
+    },
+    selectedText: {
+      color: appStyle.selectedDayTextColor
+    },
+    disabledText: {
+      color: appStyle.textDisabledColor
+    },
+    dot: {
+      width: 4,
+      height: 4,
+      marginTop: 1,
+      borderRadius: 2,
+      opacity: 0,
+      ...appStyle.dotStyle
+    },
+    visibleDot: {
+      opacity: 1,
+      backgroundColor: appStyle.dotColor
+    },
+    selectedDot: {
+      backgroundColor: appStyle.selectedDotColor
+    },
+    disabledDot: {
+      backgroundColor: appStyle.disabledDotColor || appStyle.dotColor
+    },
+    todayDot: {
+      backgroundColor: appStyle.todayDotColor || appStyle.dotColor
     },
     ...(theme[STYLESHEET_ID] || {})
   });
 }
-
